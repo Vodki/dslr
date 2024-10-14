@@ -3,50 +3,50 @@ import csv
 from prettytable import PrettyTable
 from read_data import Data  
     
-def count (data, subject):
+def count (data, feature):
     count = 0
     for row in data:
-        if row[subject]:
+        if row[feature]:
             count += 1
     return count
 
-def mean(data, subject):
+def mean(data, feature):
     sum = 0
-    count_value = count(data, subject)
+    count_value = count(data, feature)
     for row in data:
-        if row[subject]:
-            sum += row[subject]
+        if row[feature]:
+            sum += row[feature]
     return sum / count_value
 
-def std(data, subject):
-    mean_value = mean(data, subject)
-    deviation = [row[subject] - mean_value for row in data if row[subject]]
+def std(data, feature):
+    mean_value = mean(data, feature)
+    deviation = [row[feature] - mean_value for row in data if row[feature]]
     squared_deviation = [d ** 2 for d in deviation]
     variance = sum(squared_deviation) / len(deviation)
     return variance ** 0.5
 
-def minimum(data, subject):
+def minimum(data, feature):
     min_value = float('inf')
     for row in data:
-        if row[subject] and row[subject] < min_value:
-            min_value = row[subject]
+        if row[feature] and row[feature] < min_value:
+            min_value = row[feature]
     return min_value
 
-def find_percentile(data, subject, percentile):
-    values = [row[subject] for row in data if row[subject]]
+def find_percentile(data, feature, percentile):
+    values = [row[feature] for row in data if row[feature]]
     values.sort()
     index = int(len(values) * percentile)
     return values[index]
         
-def maximum(data, subject):
+def maximum(data, feature):
     max_value = float('-inf')
     for row in data:
-        if row[subject] and row[subject] > max_value:
-            max_value = row[subject]
+        if row[feature] and row[feature] > max_value:
+            max_value = row[feature]
     return max_value
 
 def display_data(data):
-    subjects = [
+    features = [
         "Arithmancy",
         "Astronomy",
         "Herbology",
@@ -63,7 +63,7 @@ def display_data(data):
         "Flying"
     ]
 
-    features = [
+    calculations = [
         "Count",
         "Mean",
         "Std",
@@ -74,28 +74,28 @@ def display_data(data):
         "Max"
     ]
 
-    for i, subject_group in enumerate(subjects, 1):
+    for i, feature_group in enumerate(features, 1):
         table = PrettyTable()
-        table.field_names = [' '] + subject_group
-        for feature in features:
-            row = [feature]
-            for subject in subject_group:
-                if feature == "Count":
-                    row.append(count(data, subject))
-                elif feature == "Mean":
-                    row.append(mean(data, subject))
-                elif feature == "Std":
-                    row.append(std(data, subject))
-                elif feature == "Min":
-                    row.append(minimum(data, subject))
-                elif feature == "25%":
-                    row.append(find_percentile(data, subject, 0.25))
-                elif feature == "50%":
-                    row.append(find_percentile(data, subject, 0.5))
-                elif feature == "75%":
-                    row.append(find_percentile(data, subject, 0.75))
-                elif feature == "Max":
-                    row.append(maximum(data, subject))
+        table.field_names = [' '] + feature_group
+        for calculation in calculations:
+            row = [calculation]
+            for feature in feature_group:
+                if calculation == "Count":
+                    row.append(count(data, feature))
+                elif calculation == "Mean":
+                    row.append(mean(data, feature))
+                elif calculation == "Std":
+                    row.append(std(data, feature))
+                elif calculation == "Min":
+                    row.append(minimum(data, feature))
+                elif calculation == "25%":
+                    row.append(find_percentile(data, feature, 0.25))
+                elif calculation == "50%":
+                    row.append(find_percentile(data, feature, 0.5))
+                elif calculation == "75%":
+                    row.append(find_percentile(data, feature, 0.75))
+                elif calculation == "Max":
+                    row.append(maximum(data, feature))
             table.add_row(row)
         print(table)
 
