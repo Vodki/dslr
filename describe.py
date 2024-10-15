@@ -1,14 +1,16 @@
 import sys
 import csv
 from prettytable import PrettyTable
-from read_data import Data  
-    
-def count (data, feature):
+from read_data import Data
+
+
+def count(data, feature):
     count = 0
     for row in data:
         if row[feature]:
             count += 1
     return count
+
 
 def mean(data, feature):
     sum = 0
@@ -18,12 +20,14 @@ def mean(data, feature):
             sum += row[feature]
     return sum / count_value
 
+
 def std(data, feature):
     mean_value = mean(data, feature)
     deviation = [row[feature] - mean_value for row in data if row[feature]]
     squared_deviation = [d ** 2 for d in deviation]
     variance = sum(squared_deviation) / len(deviation)
     return variance ** 0.5
+
 
 def minimum(data, feature):
     min_value = float('inf')
@@ -32,18 +36,21 @@ def minimum(data, feature):
             min_value = row[feature]
     return min_value
 
+
 def find_percentile(data, feature, percentile):
     values = [row[feature] for row in data if row[feature]]
     values.sort()
     index = int(len(values) * percentile)
     return values[index]
-        
+
+
 def maximum(data, feature):
     max_value = float('-inf')
     for row in data:
         if row[feature] and row[feature] > max_value:
             max_value = row[feature]
     return max_value
+
 
 def display_data(data):
     features = [
@@ -99,6 +106,7 @@ def display_data(data):
             table.add_row(row)
         print(table)
 
+
 def main():
     if len(sys.argv) != 2:
         print("Usage: python describe.py <dataset>")
@@ -106,6 +114,7 @@ def main():
     filename = sys.argv[1]
     describe = Data(filename)
     display_data(describe.data)
+
 
 if __name__ == "__main__":
     main()

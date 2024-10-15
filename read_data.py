@@ -1,12 +1,13 @@
 import sys
 import csv
 
+
 class Data:
     def __init__(self, filename) -> None:
         self.data = self.read_data_set(filename)
         if not self.data:
             sys.exit(1)
-    
+
     def read_data_set(self, filename):
         file_path = f"datasets/{filename}"
         try:
@@ -18,20 +19,20 @@ class Data:
         except Exception as e:
             print(f"An error occured: {e}")
         return []
-    
+
     def parse_value(self, key, value):
         if not value:
             return None
         if key == "Index":
             return int(value)
         if key in [
-            "Arithmancy", 
-            "Astronomy", 
-            "Herbology", 
-            "Defense Against the Dark Arts", 
-            "Divination", 
-            "Muggle Studies", 
-            "Ancient Runes", 
+            "Arithmancy",
+            "Astronomy",
+            "Herbology",
+            "Defense Against the Dark Arts",
+            "Divination",
+            "Muggle Studies",
+            "Ancient Runes",
             "History of Magic",
             "Transfiguration",
             "Potions",

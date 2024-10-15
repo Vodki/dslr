@@ -3,6 +3,7 @@ from read_data import Data
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Button
 
+
 def sort_by_house(data):
     houses = {}
     for student in data:
@@ -11,6 +12,7 @@ def sort_by_house(data):
             houses[house] = []
         houses[house].append(student)
     return houses
+
 
 def histogram(houses, subject, fig, ax):
     ax.clear()
@@ -32,15 +34,16 @@ def histogram(houses, subject, fig, ax):
     ax.set_ylabel('Frequency')
     fig.canvas.draw()
 
+
 def show_histogram(houses):
     subjects = [
-        "Arithmancy", 
-        "Astronomy", 
-        "Herbology", 
-        "Defense Against the Dark Arts", 
-        "Divination", 
-        "Muggle Studies", 
-        "Ancient Runes", 
+        "Arithmancy",
+        "Astronomy",
+        "Herbology",
+        "Defense Against the Dark Arts",
+        "Divination",
+        "Muggle Studies",
+        "Ancient Runes",
         "History of Magic",
         "Transfiguration",
         "Potions",
@@ -76,6 +79,7 @@ def show_histogram(houses):
     histogram(houses, subjects[0], fig, ax)
     plt.show()
 
+
 def main():
     if len(sys.argv) != 2:
         print("Usage: python histogram.py <dataset>")
@@ -84,6 +88,7 @@ def main():
     data = Data(filename)
     houses = sort_by_house(data.data)
     show_histogram(houses)
+
 
 if __name__ == "__main__":
     main()
