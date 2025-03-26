@@ -18,8 +18,7 @@ def main():
     weights_arrays = {col: weights_data[col].values for col in weights_data.columns}
     data = pd.read_csv(sys.argv[1])
     data.ffill(inplace=True, axis=0)
-    data = data.drop(['Birthday','First Name','Last Name'], axis=1)
-    data['Best Hand'] = data['Best Hand'].map({"Left": 0, "Right": 1})
+    data = data.drop(['Birthday','First Name','Last Name', 'Best Hand', 'Arithmancy', 'Potions', 'Care of Magical Creatures', 'Muggle Studies', 'History of Magic'], axis=1)
     
     result = []
     x = np.array(normalize(data.iloc[:,2:]))

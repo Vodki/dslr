@@ -41,15 +41,14 @@ def main():
 
     data = pd.read_csv(sys.argv[1])
     data.ffill(inplace=True, axis=0)
-    data = data.drop(['First Name', 'Last Name', 'Birthday'], axis=1)
-    data['Best Hand'] = data['Best Hand'].map({"Left": 0, "Right": 1})
+    data = data.drop(['Birthday','First Name','Last Name', 'Best Hand', 'Arithmancy', 'Potions', 'Care of Magical Creatures', 'Muggle Studies', 'History of Magic'], axis=1)
     np_data = np.array(normalize(data.iloc[:, 2:]))
     houses = ['Ravenclaw', 'Slytherin', 'Gryffindor', 'Hufflepuff']
     y_map = {house: data["Hogwarts House"].map(lambda x: 1 if x == house else 0).to_numpy() for house in houses}
     houses_thetas = []
     for house in houses:
         y = np.array(y_map[house])
-        model = LogisticRegressionOneVsAllModel([1] * 15, y, np_data, house)
+        model = LogisticRegressionOneVsAllModel([1] * 9, y, np_data, house)
         thetas = model.training()
         houses_thetas.append(thetas)
 
